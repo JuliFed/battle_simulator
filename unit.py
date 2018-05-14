@@ -4,17 +4,8 @@ import random
 class Unit:
 	def __init__(self):
 		self.health = 100
-		self.recharge = random.randrange(100, 2000)
-		
-	def Attacking(self):
-		pass
-		
-	def Defending(self):
-		pass
-		
-	
-	
-	
+		self.recharge = random.randrange(100, 2000)		
+
 		
 class	Soldier(Unit):
 	def __init__(self):
