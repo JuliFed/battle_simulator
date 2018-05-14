@@ -2,9 +2,20 @@ import random
 from abc import ABCMeta, abstractmethod
 
 
-class Unit:
-    health = 100
-    recharge = random.randrange(100, 2000)
+class Unit(metaclass=ABCMeta):
+    @property
+    @abstractmethod
+    def health(self):
+        pass
+
+    @abstractmethod
+    def attacking(self):
+        pass
+
+    @abstractmethod
+    def defending(self):
+        pass
+    # recharge = random.randrange(100, 2000)
 
 
 class Strategy(metaclass=ABCMeta):

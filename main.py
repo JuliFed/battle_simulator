@@ -20,6 +20,7 @@ def create_armies_from_json():
 
 def main():
     list_armies = create_armies_from_json()
+    print(list_armies)
 
 
 

@@ -6,6 +6,7 @@ try:
 except ImportError:
     print("Can't import numpy")
 
+
 ROUND_NUMBER = 2
 
 
@@ -15,10 +16,13 @@ def geo_mean(iterable):
 
 
 class Soldier(Unit):
-    experience = 0
 
     def __init__(self, experience=0):
         self.experience = experience
+
+    @property
+    def health(self):
+        return self.health
 
     """ 
         Вероятность успеха атаки
@@ -40,14 +44,23 @@ class Soldier(Unit):
         if self.experience <= 50:
             self.experience += 1
 
+    def attacking(self):
+        pass
+
+    def defending(self):
+        pass
+
 
 class Vehicles(Unit):
     """
 
     """
-    operators = []
+    @property
+    def health(self):
+        return self.health
 
     def __init__(self, unit_name=Soldier, count_operators=3):
+        self.operators = []
         self.count_operators = count_operators
         for i in range(count_operators):
             self.operators.append(unit_name())
@@ -76,10 +89,17 @@ class Vehicles(Unit):
     def damage(self):
         return round(0.1 + self.operators_experience(), ROUND_NUMBER)
 
+    def attacking(self):
+        pass
+
+    def defending(self):
+        pass
+
 
 class Squads:
-    units = []
-    count_units = 0
+    def __init__(self):
+        self.count_units = 0
+        self.units = []
 
     def add_units(self,count_units, *unit_type):
         for i in range(count_units):
@@ -94,10 +114,8 @@ class Squads:
 
 
 class Army:
-    strategy = None
-    squads = []
-
     def __init__(self, strategy):
+        self.squads = []
         self.strategy = strategy
 
     def add_squad(self, sq):
