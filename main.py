@@ -2,7 +2,7 @@ import json
 from unit import *
 
 
-def createArmies():
+def create_armies_from_json():
     json_data = open('input_data.json').read()
     data = json.loads(json_data)
     list_armies = []
@@ -15,9 +15,13 @@ def createArmies():
             arm.add_squad(s)
         list_armies.append(arm)
 
-    print(arm)
+    return list_armies
+
+
+def main():
+    list_armies = create_armies_from_json()
 
 
 
 if __name__ == '__main__':
-    createArmies()
+    main()

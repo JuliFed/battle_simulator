@@ -81,10 +81,9 @@ class Squads:
     units = []
     count_units = 0
 
-    def add_units(self,count_units, unit_type=Soldier):
-        print(unit_type, count_units)
+    def add_units(self,count_units, *unit_type):
         for i in range(count_units):
-            self.units.append(unit_type())
+            self.units.append(*unit_type)
         self.count_units += count_units
 
     def damage(self):
@@ -96,8 +95,11 @@ class Squads:
 
 class Army:
     strategy = None
+    squads = []
 
     def __init__(self, strategy):
         self.strategy = strategy
 
+    def add_squad(self, sq):
+        self.squads.append(sq)
 
