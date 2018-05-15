@@ -1,5 +1,6 @@
 import unit
 import lib
+from strategy import RandomStrategy
 
 
 class Squad:
@@ -11,7 +12,6 @@ class Squad:
     counter = 0
 
     def __init__(self, squad):
-        self.count_units = 0
         self.units = []
         self.__class__.counter += 1
         self.name = "Squad " + str(self.__class__.counter)
@@ -22,11 +22,10 @@ class Squad:
         getattr(unit, unit_type)().__class__.counter = 0
         for _ in range(count_units):
             self.units.append(getattr(unit, unit_type)())
-        self.count_units += count_units
 
     def attack(self):
         total_attack = [one_unit.attack()
-                for one_unit in self.units]
+                        for one_unit in self.units]
         return round(lib.geo_mean(total_attack), lib.ROUND_NUMBER)
 
     def damage(self):
@@ -39,14 +38,13 @@ class Squad:
         total_health = 0
         for one_unit in self.units:
             total_health += one_unit.health
-        if total_health == 0:
-            self.alive = False
         return total_health
 
-    def print_composition(self):
-        print(self.name,self.total_health(), self.damage())
-        for one_unit in self.units:
-            one_unit.print_composition()
+    def print_composition(self, flag=0):
+        print(self.name, "Health", self.total_health(), "Damage", self.damage())
+        if flag == 1:
+            for one_unit in self.units:
+                one_unit.print_composition()
 
 
 class Army:
@@ -54,10 +52,11 @@ class Army:
     Class for army
     Army has squads, strategy
     """
+
     def __init__(self, name, strategy, squads):
         self.squads = []
-        self.strategy = strategy
-        self.alive = True
+        if strategy == 'random':
+            self.strategy = RandomStrategy()
         self.name = name
         for squad in squads:
             self.add_squad(Squad(squad))
@@ -69,7 +68,12 @@ class Army:
         pass
 
     def print_composition(self):
+        print('##############################')
         print(self.name)
+        print('##############################')
         for squad in self.squads:
             squad.print_composition()
 
+    def attack_enemy(self, enemy):
+        squad_for_attack = self.strategy.get_squad(enemy)
+        pass

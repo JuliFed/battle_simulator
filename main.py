@@ -63,7 +63,8 @@ def main():
     # list_armies = create_random_armies()
     print(list_armies[0].squads[0].attack())
     print(list_armies[0].squads[0].damage())
-    list_armies[0].print_composition()
+    for a in list_armies:
+        a.print_composition()
 
 
 if __name__ == '__main__':
