@@ -1,35 +1,37 @@
   [
     {
-    "strategy":"random",
-    "squads":[
-      {
-        "Soldier":10,
-        "Vehicles":3
-      },
-      {
-        "Soldier":7,
-        "Vehicles":5
-      },
-      {
-        "Soldier":5,
-        "Vehicles":5
-      }
-    ]
-  },
-  {
-    "strategy":"random",
-    "squads":[
+      "name":"Army 1",
+      "strategy":"random",
+      "squads":[
+        {
+          "Soldier":10,
+          "Vehicles":3
+        },
+        {
+          "Soldier":5,
+          "Vehicles":5
+        },
+        {
+          "Soldier":7,
+          "Vehicles":5
+        }
+      ]
+    },
+    {
+      "name":"Army 2",
+      "strategy":"random",
+      "squads":[
       {
         "Soldier":7,
         "Vehicles":4
       },
       {
-        "Soldier":10,
-        "Vehicles":2
+        "Vehicles":7,
+        "Soldier":3
       },
       {
-        "Soldier":3,
-        "Vehicles":7
+        "Soldier":10,
+        "Vehicles":2
       }
     ]
   }

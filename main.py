@@ -24,16 +24,16 @@ def create_random_armies():
         unit_types.pop(base, 'None')
     unit_types = tuple(unit_types.keys())
     list_armies = []
-    for _ in range(rnd.randrange(int(rules['armies']),int(rules['armies']*2))):
+    for number_arm in range(rnd.randrange(int(rules['armies']), int(rules['armies']*2))):
         army = []
+        name = 'Army ' + number_arm
         strategy = rules['strategies'].split('|')
-        for _ in range(rnd.randrange(int(rules['squads']),int(rules['squads']*2))):
+        for _ in range(rnd.randrange(int(rules['squads']), int(rules['squads']*2))):
             squad = {}
             for unit_type in unit_types:
-
                 squad[unit_type] = rnd.randrange(int(rules['minunits']), int(rules['maxunits']))
             army.append(squad)
-        arm = Army(strategy, army)
+        arm = Army(name, strategy, army)
         list_armies.append(arm)
     return list_armies
 
@@ -46,9 +46,13 @@ def create_armies_from_json():
     data = json.loads(json_data)
     list_armies = []
     for army in data:
-        arm = Army(army['strategy'], army['squads'])
+        arm = Army(army['name'], army['strategy'], army['squads'])
         list_armies.append(arm)
     return list_armies
+
+
+def attack_round(army1, army2):
+    pass
 
 
 def main():
@@ -56,13 +60,10 @@ def main():
     Main function to start simulator
     """
     list_armies = create_armies_from_json()
-    #list_armies = create_random_armies()
-
+    # list_armies = create_random_armies()
     print(list_armies[0].squads[0].attack())
     print(list_armies[0].squads[0].damage())
-
-
-
+    list_armies[0].print_composition()
 
 
 if __name__ == '__main__':

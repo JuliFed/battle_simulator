@@ -18,14 +18,14 @@ class Unit(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def attacking(self):
+    def attack(self):
         """
         Abstract method for attack
         """
         pass
 
     @abstractmethod
-    def defending(self):
+    def damage(self):
         """
         Abstract method for defending
         """
