@@ -14,12 +14,7 @@ def create_armies_from_json():
     data = json.loads(json_data)
     list_armies = []
     for army in data:
-        arm = Army(army['strategy'])
-        for squad in army['squads']:
-            new_squad = Squad()
-            for prop in squad:
-                new_squad.add_units(squad[prop], prop)
-            arm.add_squad(new_squad)
+        arm = Army(army['strategy'], army['squads'])
         list_armies.append(arm)
 
     return list_armies

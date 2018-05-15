@@ -107,9 +107,11 @@ class Squad:
     Class for Squad
     Squad has different units
     """
-    def __init__(self):
+    def __init__(self, squad):
         self.count_units = 0
         self.units = []
+        for unit_name in squad:
+            self.add_units(squad[unit_name], unit_name)
 
     def add_units(self, count_units, *unit_type):
         for _ in range(count_units):
@@ -133,9 +135,11 @@ class Army:
     Army has squads, strategy
 
     """
-    def __init__(self, strategy):
+    def __init__(self, strategy, squads):
         self.squads = []
         self.strategy = strategy
+        for squad in squads:
+            self.add_squad(Squad(squad))
 
     def add_squad(self, squad):
         self.squads.append(squad)

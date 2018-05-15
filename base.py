@@ -2,7 +2,6 @@
 Base classes for units and strateries
 """
 
-# import random
 from abc import ABCMeta, abstractmethod
 
 
