@@ -4,16 +4,20 @@ import lib
 
 
 class Soldier(Unit):
-    def __init__(self, experience=0):
-        self.experience = experience
-        self.health = 100
-
     @property
     def health(self):
         """
         Returned Soldier's health
         """
-        return self.health
+        return self._health
+
+    @health.setter
+    def health(self, value):
+        self._health = value
+
+    def __init__(self, experience=0):
+        self.experience = experience
+        self._health = 100
 
     def damage(self):
         return round(0.05 + self.experience / 100, lib.ROUND_NUMBER)
@@ -53,26 +57,30 @@ class Vehicles(Unit):
         """
         return self.total_health()
 
+    @health.setter
+    def health(self, value):
+        self._health = value
+
     def __init__(self, unit_name=Soldier, count_operators=3):
         self.operators = []
         self.count_operators = count_operators
         for _ in range(count_operators):
             self.operators.append(unit_name())
-        #self.health = 100
+        self._health = 100
         # self.recharge = random.randrange(1000, 2000)
 
     def total_health(self):
         """
                 Returned health of vehicles and all operators
         """
-        total_health = self.health
+        total_health = self._health
         for unit in self.operators:
             total_health += unit.health
 
-        return round(total_health / (self.count_operators + 1), ROUND_NUMBER)
+        return round(total_health / (self.count_operators + 1), lib.ROUND_NUMBER)
 
     def attack(self):
-        attacks_value = [i.attack
+        attacks_value = [i.attack()
                          for i in self.operators]
         return round(0.5 * (1 + self.health / 100) * lib.geo_mean(attacks_value),
                      lib.ROUND_NUMBER)

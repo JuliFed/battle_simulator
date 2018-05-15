@@ -1,6 +1,7 @@
 import unit
 import lib
 
+
 class Squad:
     """
     Class for Squad
@@ -9,6 +10,7 @@ class Squad:
     def __init__(self, squad):
         self.count_units = 0
         self.units = []
+        self.active = True
         for unit_name in squad:
             self.add_units(squad[unit_name], unit_name)
 
@@ -16,24 +18,22 @@ class Squad:
         for _ in range(count_units):
             self.units.append(getattr(unit, unit_type)())
         self.count_units += count_units
-        print(self.units)
 
     def attack(self):
-        total_attack = [one.attack()
-                for one in self.units]
-        print(total_attack)
-        return lib.geo_mean(total_attack)
+        total_attack = [one_unit.attack()
+                for one_unit in self.units]
+        return round(lib.geo_mean(total_attack), lib.ROUND_NUMBER)
 
     def damage(self):
         total_damage = 0
-        for unit in self.units:
-            total_damage += unit.damage
+        for one_unit in self.units:
+            total_damage += one_unit.damage()
         return total_damage
 
     def total_health(self):
         total_health = 0
-        for unit in self.units:
-            total_health += unit.health
+        for one_unit in self.units:
+            total_health += one_unit.health
         return total_health
 
 

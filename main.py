@@ -57,7 +57,10 @@ def main():
     """
     list_armies = create_armies_from_json()
     #list_armies = create_random_armies()
+
     print(list_armies[0].squads[0].attack())
+    print(list_armies[0].squads[0].damage())
+
 
 
 
