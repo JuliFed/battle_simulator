@@ -1,4 +1,4 @@
-import random as rnd
+import random
 from base import Unit
 import lib
 
@@ -11,6 +11,7 @@ class Soldier(Unit):
         self._health = 100
         self.__class__.counter += 1
         self.name = "Soldier " + str(self.__class__.counter)
+        self.alive = True
 
     @property
     def health(self):
@@ -21,9 +22,9 @@ class Soldier(Unit):
 
     @health.setter
     def health(self, value):
-        if value == 0:
-            del self
-        self._health = value
+        if value <= 0:
+            self.alive = False
+        self._health = round(value, lib.ROUND_NUMBER)
 
     def damage(self):
         return round(0.05 + self.experience / 100, lib.ROUND_NUMBER)
@@ -33,20 +34,26 @@ class Soldier(Unit):
         Вероятность успеха атаки
         0.5 * (1 + health/100) * random(50 + experience, 100) / 100
         """
-        rnd_koofic = rnd.randrange(50 + self.experience, 100) / 100
+        rnd_koofic = random.randrange(50 + self.experience, 100+1) / 100
         return round(0.5 * (1 + self.health / 100) * rnd_koofic, lib.ROUND_NUMBER)
 
     def add_experience(self):
         """
         Add experience from 0 to 50(max)
         """
-        if self.experience <= 50:
+        if self.experience <= 49:
             self.experience += 1
 
     def print_composition(self, name=''):
         if name == '':
             name = self.name
-        print('\t', name, self.health, self.experience)
+        return '\t' + name + ' ' + str(self.health) + ' ' + str(self.experience) + '\n'
+
+    def lost(self, damage):
+        self.health -= damage
+
+    def win(self):
+        self.add_experience()
 
 
 class Vehicles(Unit):
@@ -65,27 +72,35 @@ class Vehicles(Unit):
         for _ in range(count_operators):
             self.operators.append(unit_name())
         self._health = 100
+        self.alive = True
 
     @property
     def health(self):
         """
         Returned health of vehicles
         """
-        return self.total_health()
+        oper_healh = self.operator_health()
+        return oper_healh+self._health
 
     @health.setter
     def health(self, value):
-        if value == 0:
-            del self
         self._health = value
+        if self._health <= 0:
+            self.alive = False
 
-    def total_health(self):
+    def died_operator(self):
+        for operator in self.operators:
+            if not operator.alive:
+                self.operators.remove(operator)
+        if len(self.operators) == 0:
+            self.alive = False
+
+    def operator_health(self):
         """
                 Returned health of vehicles and all operators
         """
-        total_health = self._health + sum([operator.health
-                                           for operator in self.operators])
-        return total_health
+        return sum([operator.health
+                    for operator in self.operators])
 
     def attack(self):
         attacks_value = [operator.attack()
@@ -99,6 +114,20 @@ class Vehicles(Unit):
         return round(0.1 + sum_exp, lib.ROUND_NUMBER)
 
     def print_composition(self):
-        print('\t', self.name)
+        result = '\t' + self.name + '\n'
         for operator in self.operators:
-            print('\t', '\t', operator.health, operator.experience)
+            result += '\t' + '\t ' + str(operator.health) + ' ' + str(operator.experience) + '\n'
+        return result
+
+    def lost(self, damage):
+        self.health = self._health - damage*0.6
+        random_operator = random.choice(self.operators)
+        random_operator.health = random_operator.health - damage*0.2
+        for operator in self.operators:
+            if operator != random_operator:
+                operator.health = operator.health - damage * 0.1
+        self.died_operator()
+
+    def win(self):
+        for operator in self.operators:
+            operator.add_experience()
