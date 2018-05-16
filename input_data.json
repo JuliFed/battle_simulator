@@ -1,37 +1,37 @@
-  [
-    {
-      "name":"Army 1",
-      "strategy":"RandomStrategy",
-      "squads":[
-        {
-          "Soldier":5,
-          "Vehicles":3
-        },
-        {
-          "Soldier":7,
-          "Vehicles":6
-        },
-        {
-          "Soldier":4,
-          "Vehicles":5
-        }
-      ]
-    },
-    {
-      "name":"Army 2",
-      "strategy":"RandomStrategy",
-      "squads":[
+[
+  {
+    "name": "FIRST_ARMY",
+    "strategy": "RandomStrategy",
+    "squads": [
       {
-        "Soldier":7,
-        "Vehicles":4
+        "Soldier": 5,
+        "Vehicles": 5
       },
       {
-        "Soldier":7,
+        "Soldier": 7,
+        "Vehicles": 7
+      },
+      {
+        "Soldier": 6,
+        "Vehicles": 6
+      }
+    ]
+  },
+  {
+    "name":"SECOND_ARMY",
+    "strategy":"RandomStrategy",
+    "squads":[
+      {
+        "Soldier":5,
+        "Vehicles":5
+      },
+      {
+        "Soldier":6,
         "Vehicles":6
       },
       {
-        "Soldier":10,
-        "Vehicles":2
+        "Soldier":7,
+        "Vehicles":7
       }
     ]
   }

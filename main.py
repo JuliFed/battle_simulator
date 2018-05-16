@@ -55,7 +55,7 @@ class Game:
             unit_types.pop(base, 'None')
         unit_types = tuple(unit_types.keys())
         count_arm = random.randrange( int(self.rules['armies']), int(self.rules['armies']) * 2)
-        print('COUNT_ARMIES', count_arm)
+        # print('COUNT_ARMIES', count_arm)
         for number_arm in range(count_arm):
             army = []
             name = 'Army ' + str(number_arm+1)
@@ -130,14 +130,11 @@ def main():
     game.fight()
     del file_log
 
-    for win in game.win:
-        army_composition = win.print_composition(1)
-
-    game.file_log.add_strings_in_log("#################---------- WIN -------------######################")
-    game.file_log.add_strings_in_log(army_composition)
-    if game.console_print:
-        print("#################---------- WIN -------------######################")
-        print(army_composition)
+    for arm in game.armies:
+        army_composition = arm.print_composition()
+        game.file_log.add_strings_in_log(army_composition)
+        if game.console_print:
+            print(army_composition)
 
 
 if __name__ == '__main__':

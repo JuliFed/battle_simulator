@@ -34,8 +34,8 @@ class Soldier(Unit):
         Вероятность успеха атаки
         0.5 * (1 + health/100) * random(50 + experience, 100) / 100
         """
-        rnd_koofic = random.randrange(50 + self.experience, 100+1) / 100
-        return round(0.5 * (1 + self.health / 100) * rnd_koofic, lib.ROUND_NUMBER)
+        random_coefficient = random.randrange(50 + self.experience, 100+1) / 100
+        return round(0.5 * (1 + self.health / 100) * random_coefficient, lib.ROUND_NUMBER)
 
     def add_experience(self):
         """
