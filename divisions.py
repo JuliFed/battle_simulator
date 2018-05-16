@@ -55,7 +55,7 @@ class Squad:
                 result += one_unit.print_composition()
         return result
 
-    def round_lost(self, damage):
+    def lost(self, damage):
         count_units = len(self.units)
         for one_unit in self.units:
             one_unit.lost(round(damage/count_units, lib.ROUND_NUMBER))
@@ -63,7 +63,7 @@ class Squad:
         if self.total_health() <= 0:
             self.alive = False
 
-    def round_win(self, damage):
+    def win(self, damage):
         self.score += damage*100
         for one_unit in self.units:
             one_unit.win()
@@ -136,8 +136,8 @@ class Army:
             result += '\t' + attacking_squad.name + ' VS ' + defending_squad.name + ' => '
             if attacking_squad_probability > defending_squad_probability:
                 damage = attacking_squad.damage()
-                defending_squad.round_lost(damage)
-                attacking_squad.round_win(damage)
+                defending_squad.lost(damage)
+                attacking_squad.win(damage)
                 result += ' Round Win (' + str(attacking_squad_probability) + '/' + str(defending_squad_probability) + '),'
                 result += ' Damage = ' + str(damage)+ ', Health=' + str(attacking_squad.total_health())
                 result += ', Enemy Health=' + str(defending_squad.total_health()) + '\n'
